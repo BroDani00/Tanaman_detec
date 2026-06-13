@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  tflite_flutter: ^0.12.1
   # UI
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
@@ -24,6 +24,8 @@ dependencies:
   
   # Image & Camera
   image_picker: ^1.0.7
+
+  image: ^3.2.2
   
   # Shared Preferences untuk session
   shared_preferences: ^2.2.2
@@ -37,7 +39,7 @@ flutter:
   uses-material-design: true
   
   assets:
-    - assets/images/cabai.jpg
-    - assets/images/jagung.jpg
-    - assets/images/padi.jpg
-    - assets/images/logo.png
+    - assets/models/plant_model.tflite
+    - assets/models/plant_label.txt
+    - assets/data/disease_data.json
+    - assets/images/images.png

@@ -1,0 +1,526 @@
+[
+  {
+    "label": "virus_mosaik_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Virus Mosaik",
+    "status": "Sakit",
+    "deskripsi": "Penyakit virus mosaik pada tomat disebabkan oleh Tobacco Mosaic Virus (TMV) atau Tomato Mosaic Virus (ToMV). Menyebabkan daun keriput dan pola mozaik hijau tua-hijau muda.",
+    "gejala": [
+      "Daun berwarna mozaik hijau tua dan hijau muda",
+      "Daun mengerut dan mengecil",
+      "Tanaman kerdil",
+      "Buah bernoda kuning atau coklat"
+    ],
+    "penyebab": [
+      "Tobacco Mosaic Virus (TMV)",
+      "Kontak mekanis melalui alat atau tangan",
+      "Bibit terinfeksi"
+    ],
+    "penanganan": [
+      "Cabut dan bakar tanaman terinfeksi",
+      "Disinfeksi alat pertanian",
+      "Kendalikan vektor (kutu daun)"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan virus",
+      "Cuci tangan sebelum menyentuh tanaman",
+      "Rotasi tanaman non-solanaceae"
+    ]
+  },
+  {
+    "label": "tungro_daun_padi",
+    "tanaman": "Padi",
+    "penyakit": "Tungro",
+    "status": "Sakit",
+    "deskripsi": "Penyakit tungro disebabkan oleh virus yang ditularkan oleh wereng hijau. Sangat merugikan, dapat menyebabkan kehilangan hasil hingga 100%.",
+    "gejala": [
+      "Daun berwarna kuning oranye dari ujung hingga pangkal",
+      "Tanaman kerdil dengan jumlah anakan sedikit",
+      "Malai keluar pendek dan tidak sempurna",
+      "Bercak coklat pada daun yang terserang parah"
+    ],
+    "penyebab": [
+      "Virus Tungro (RTV) ditularkan wereng hijau",
+      "Populasi wereng hijau tinggi",
+      "Tanam serempak sepanjang tahun"
+    ],
+    "penanganan": [
+      "Semprot insektisida untuk wereng hijau",
+      "Cabut tanaman terinfeksi dan kubur",
+      "Gunakan pestisida berbahan aktif carbofuran atau BPMC"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan tungro (Tukad Petanu, Ciherang)",
+      "Tanam serempak dalam satu wilayah",
+      "Gunakan perangkap lampu untuk wereng hijau"
+    ]
+  },
+  {
+    "label": "bacteri_spot_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Bercak Bakteri",
+    "status": "Sakit",
+    "deskripsi": "Penyakit bercak bakteri pada tomat disebabkan oleh Xanthomonas campestris pv. vesicatoria. Menyebabkan bercak-bercak kecil pada daun dan buah.",
+    "gejala": [
+      "Bercak kecil basah berwarna hijau tua pada daun",
+      "Bercak berubah menjadi coklat dengan tepi kuning",
+      "Bercak hitam timbul pada buah",
+      "Daun menguning dan gugur"
+    ],
+    "penyebab": [
+      "Bakteri Xanthomonas campestris pv. vesicatoria",
+      "Kelembaban tinggi dan curah hujan lebat",
+      "Percikan air dari tanah"
+    ],
+    "penanganan": [
+      "Semprot bakterisida berbahan tembaga",
+      "Cabut tanaman terinfeksi berat",
+      "Kurangi penyiraman dari atas"
+    ],
+    "pencegahan": [
+      "Gunakan benih bebas patogen",
+      "Jarak tanam tidak terlalu rapat",
+      "Hindari pengairan sprinkler"
+    ]
+  },
+  {
+    "label": "bercak_daun_abu_jagung",
+    "tanaman": "Jagung",
+    "penyakit": "Bercak Daun Abu-Abu",
+    "status": "Sakit",
+    "deskripsi": "Penyakit bercak abu-abu pada jagung disebabkan oleh jamur Cercospora zeae-maydis. Umum terjadi pada musim hujan.",
+    "gejala": [
+      "Bercak memanjang sempit berwarna abu-abu",
+      "Bercak sejajar dengan tulang daun",
+      "Jaringan daun mengering dan mati"
+    ],
+    "penyebab": [
+      "Jamur Cercospora zeae-maydis",
+      "Kelembaban daun berkepanjangan",
+      "Kesuburan tanah rendah"
+    ],
+    "penanganan": [
+      "Aplikasi fungisida azoxystrobin",
+      "Pengolahan tanah yang baik",
+      "Tambahkan pupuk kalium"
+    ],
+    "pencegahan": [
+      "Gunakan varietas toleran",
+      "Rotasi tanaman",
+      "Jarak tanam lebar"
+    ]
+  },
+  {
+    "label": "bercak_daun_septoria_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Bercak Daun Septoria",
+    "status": "Sakit",
+    "deskripsi": "Penyakit bercak daun septoria disebabkan oleh jamur Septoria lycopersici. Menyebabkan bercak-bercak kecil pada daun bagian bawah.",
+    "gejala": [
+      "Bercak kecil bulat berair dengan pusat abu-abu",
+      "Tepi bercak berwarna coklat kehitaman",
+      "Titik-titik hitam (piknidia) di tengah bercak",
+      "Daun menguning dan gugur dari bawah ke atas"
+    ],
+    "penyebab": [
+      "Jamur Septoria lycopersici",
+      "Kelembaban tinggi dan sisa tanaman terinfeksi",
+      "Penyiraman dari atas"
+    ],
+    "penanganan": [
+      "Semprot fungisida berbahan aktif chlorothalonil atau mancozeb",
+      "Buang daun bagian bawah yang terinfeksi",
+      "Cabut tanaman parah"
+    ],
+    "pencegahan": [
+      "Jarak tanam tidak rapat",
+      "Mulsa plastik untuk cegah percikan tanah",
+      "Rotasi tanaman 2-3 tahun"
+    ]
+  },
+  {
+    "label": "bintik_coklat_daun_padi",
+    "tanaman": "Padi",
+    "penyakit": "Bercak Coklat",
+    "status": "Sakit",
+    "deskripsi": "Penyakit bercak coklat pada padi disebabkan oleh jamur Cochliobolus miyabeanus. Umum terjadi pada lahan kekurangan hara.",
+    "gejala": [
+      "Bercak coklat berbentuk bulat hingga lonjong pada daun",
+      "Bercak memiliki pusat abu-abu dengan tepi coklat",
+      "Biji menjadi bercak hitam"
+    ],
+    "penyebab": [
+      "Jamur Cochliobolus miyabeanus",
+      "Tanaman kekurangan unsur hara",
+      "Tanah masam dan drainase buruk"
+    ],
+    "penanganan": [
+      "Aplikasikan fungisida mancozeb",
+      "Perbaiki drainase lahan",
+      "Berikan pupuk kalium"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan",
+      "Seimbangkan pemupukan",
+      "Perbaiki drainase lahan"
+    ]
+  },
+  {
+    "label": "blast_daun_padi",
+    "tanaman": "Padi",
+    "penyakit": "Blas",
+    "status": "Sakit",
+    "deskripsi": "Penyakit blas pada padi disebabkan oleh jamur Pyricularia oryzae. Sangat merusak dan dapat menyebabkan kehilangan hasil hingga 50%.",
+    "gejala": [
+      "Bercak berbentuk belah ketupat seperti mata ikan pada daun",
+      "Bercak abu-abu dengan tepi coklat kemerahan",
+      "Daun tampak terbakar seperti tersiram air panas",
+      "Leher malai membusuk dan patah"
+    ],
+    "penyebab": [
+      "Jamur Pyricularia oryzae",
+      "Pemupukan nitrogen berlebihan",
+      "Tanaman terlalu rapat dan lembab",
+      "Varietas padi rentan"
+    ],
+    "penanganan": [
+      "Semprot fungisida tricyclazole atau isoprothiolane",
+      "Penyemprotan saat gejala awal",
+      "Cabut dan bakar tanaman infeksi berat"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan blas (Ciherang, Inpari)",
+      "Atur jarak tanam (20x20 atau 25x25 cm)",
+      "Hindari nitrogen berlebihan",
+      "Rotasi tanaman palawija"
+    ]
+  },
+  {
+    "label": "daun_busuk_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Daun Busuk",
+    "status": "Sakit",
+    "deskripsi": "Penyakit daun busuk pada tomat biasanya disebabkan oleh jamur Phytophthora infestans (hawar daun) atau jamur lainnya yang menyebabkan jaringan daun membusuk.",
+    "gejala": [
+      "Bercak basah tidak beraturan pada daun",
+      "Daun menjadi hitam kecoklatan dan busuk",
+      "Jaringan daun hancur",
+      "Batang juga dapat terserang"
+    ],
+    "penyebab": [
+      "Jamur Phytophthora infestans",
+      "Kelembaban sangat tinggi",
+      "Suhu dingin dan basah"
+    ],
+    "penanganan": [
+      "Semprot fungisida berbahan aktif metalaxyl atau mancozeb",
+      "Cabut dan bakar tanaman terinfeksi",
+      "Hindari penyiraman berlebihan"
+    ],
+    "pencegahan": [
+      "Jarak tanam lebar untuk sirkulasi udara",
+      "Mulsa plastik",
+      "Rotasi tanaman non-solanaceae"
+    ]
+  },
+  {
+    "label": "embun_tepung_daun_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Embun Tepung",
+    "status": "Sakit",
+    "deskripsi": "Penyakit embun tepung pada tomat disebabkan oleh jamur Oidium atau Leveillula taurica. Muncul seperti tepung putih pada daun.",
+    "gejala": [
+      "Bercak tepung putih pada permukaan daun atas",
+      "Daun menguning dan mengering",
+      "Serangan berat menyebabkan gugur daun",
+      "Pertumbuhan tanaman terhambat"
+    ],
+    "penyebab": [
+      "Jamur Oidium spp. atau Leveillula taurica",
+      "Kelembaban rendah dan suhu hangat",
+      "Sirkulasi udara buruk"
+    ],
+    "penanganan": [
+      "Semprot fungisida belerang atau myclobutanil",
+      "Buang daun terinfeksi",
+      "Kurangi pemupukan nitrogen"
+    ],
+    "pencegahan": [
+      "Jarak tanam tidak rapat",
+      "Hindari naungan berlebih",
+      "Gunakan varietas tahan jika tersedia"
+    ]
+  },
+  {
+    "label": "hawar_daun_jagung",
+    "tanaman": "Jagung",
+    "penyakit": "Hawar Daun",
+    "status": "Sakit",
+    "deskripsi": "Penyakit hawar daun pada jagung disebabkan oleh jamur Helminthosporium maydis atau Exserohilum turcicum. Menyebabkan daun mengering seperti terbakar.",
+    "gejala": [
+      "Bercak coklat berbentuk lonjong memanjang",
+      "Bercak bersatu membentuk hawar besar",
+      "Daun mengering dari bawah ke atas"
+    ],
+    "penyebab": [
+      "Jamur Helminthosporium maydis",
+      "Kelembaban tinggi",
+      "Varietas rentan"
+    ],
+    "penanganan": [
+      "Semprot fungisida mancozeb atau azoxystrobin",
+      "Buang daun terinfeksi",
+      "Perbaiki drainase"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan",
+      "Rotasi tanaman",
+      "Pemupukan berimbang"
+    ]
+  },
+  {
+    "label": "hawar_daun_padi",
+    "tanaman": "Padi",
+    "penyakit": "Hawar Daun Bakteri",
+    "status": "Sakit",
+    "deskripsi": "Penyakit hawar daun bakteri pada padi disebabkan oleh bakteri Xanthomonas oryzae. Menyebabkan daun mengering seperti terbakar.",
+    "gejala": [
+      "Daun menguning dan menggulung di tepi",
+      "Garis-garis abu-abu muda pada daun",
+      "Daun tampak seperti terkena air mendidih"
+    ],
+    "penyebab": [
+      "Bakteri Xanthomonas oryzae",
+      "Pemupukan nitrogen tinggi",
+      "Kelembaban tinggi dan genangan air"
+    ],
+    "penanganan": [
+      "Gunakan bakterisida berbahan tembaga",
+      "Kurangi pemupukan nitrogen",
+      "Cabut dan bakar tanaman terinfeksi"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan",
+      "Atur drainase agar tidak tergenang",
+      "Tanam bibit sehat"
+    ]
+  },
+  {
+    "label": "hawar_dini_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Hawar Dini",
+    "status": "Sakit",
+    "deskripsi": "Penyakit hawar dini pada tomat disebabkan oleh jamur Alternaria solani. Menyebabkan bercak bersarang dan kematian daun dini.",
+    "gejala": [
+      "Bercak coklat bersarang (berkonsentris) pada daun tua",
+      "Tepi bercak berwarna kuning",
+      "Daun mengering dan mati dari bawah ke atas",
+      "Bercak hitam cekung pada buah"
+    ],
+    "penyebab": [
+      "Jamur Alternaria solani",
+      "Kelembaban tinggi dan suhu hangat",
+      "Sisa tanaman terinfeksi di lahan"
+    ],
+    "penanganan": [
+      "Semprot fungisida chlorothalonil, mancozeb, atau azoxystrobin",
+      "Buang daun bawah yang terinfeksi",
+      "Cabut tanaman parah"
+    ],
+    "pencegahan": [
+      "Rotasi tanaman 2-3 tahun",
+      "Mulsa plastik",
+      "Hindari pemupukan nitrogen berlebih"
+    ]
+  },
+  {
+    "label": "jamur_daun_padi",
+    "tanaman": "Padi",
+    "penyakit": "Smut Daun",
+    "status": "Sakit",
+    "deskripsi": "Penyakit smut daun pada padi disebabkan oleh jamur Entyloma oryzae. Biasanya muncul pada daun tua.",
+    "gejala": [
+      "Bercak hitam seperti jelaga pada permukaan daun",
+      "Bercak berbentuk garis memanjang",
+      "Daun menguning pada serangan berat"
+    ],
+    "penyebab": [
+      "Jamur Entyloma oryzae",
+      "Kelembaban tinggi",
+      "Tanaman terlalu rimbun"
+    ],
+    "penanganan": [
+      "Semprot fungisida sistemik",
+      "Buang daun terinfeksi",
+      "Kurangi kepadatan tanaman"
+    ],
+    "pencegahan": [
+      "Atur jarak tanam ideal",
+      "Seimbangkan pemupukan",
+      "Rotasi tanaman"
+    ]
+  },
+  {
+    "label": "jamur_daun_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Jamur Daun",
+    "status": "Sakit",
+    "deskripsi": "Penyakit jamur daun pada tomat dapat mencakup berbagai patogen seperti Cladosporium fulvum (cetakan daun) atau lainnya yang menyebabkan bercak dan pertumbuhan jamur.",
+    "gejala": [
+      "Bercak kekuningan pada daun atas",
+      "Lapisan jamur zaitun kehitaman pada daun bawah",
+      "Daun menggulung dan gugur"
+    ],
+    "penyebab": [
+      "Jamur Cladosporium fulvum atau patogen lainnya",
+      "Kelembaban tinggi",
+      "Sirkulasi udara buruk"
+    ],
+    "penanganan": [
+      "Semprot fungisida berbahan aktif mancozeb atau chlorothalonil",
+      "Buang daun terinfeksi",
+      "Kurangi kelembaban"
+    ],
+    "pencegahan": [
+      "Jarak tanam lebar",
+      "Hindari penyiraman daun",
+      "Rotasi tanaman"
+    ]
+  },
+  {
+    "label": "karat_daun_jagung",
+    "tanaman": "Jagung",
+    "penyakit": "Karat Daun",
+    "status": "Sakit",
+    "deskripsi": "Penyakit karat daun pada jagung disebabkan oleh jamur Puccinia sorghi. Menurunkan kemampuan fotosintesis.",
+    "gejala": [
+      "Bercak kecil coklat kemerahan pada daun",
+      "Bercak berubah hitam saat spora dewasa",
+      "Daun mengering dari tepi ke tengah"
+    ],
+    "penyebab": [
+      "Jamur Puccinia sorghi",
+      "Suhu dingin dan kelembaban tinggi",
+      "Tanaman terlalu rapat"
+    ],
+    "penanganan": [
+      "Aplikasikan fungisida propiconazole",
+      "Semprot saat gejala awal",
+      "Buang daun terinfeksi"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan",
+      "Jaga jarak tanam",
+      "Hindari nitrogen berlebih"
+    ]
+  },
+  {
+    "label": "keriting_daun_cabai",
+    "tanaman": "Cabai",
+    "penyakit": "Keriting Daun",
+    "status": "Sakit",
+    "deskripsi": "Penyakit keriting daun cabai disebabkan oleh virus yang ditularkan oleh kutu kebul (Bemisia tabaci).",
+    "gejala": [
+      "Daun menggulung ke atas atau ke bawah",
+      "Daun mengerut dan kekuningan",
+      "Tanaman menjadi kerdil"
+    ],
+    "penyebab": [
+      "Virus Chili Leaf Curl",
+      "Kutu kebul sebagai vektor",
+      "Kepadatan tanaman tinggi"
+    ],
+    "penanganan": [
+      "Semprot insektisida untuk kutu kebul (imidacloprid)",
+      "Cabut tanaman terinfeksi",
+      "Gunakan perangkap kuning"
+    ],
+    "pencegahan": [
+      "Gunakan varietas tahan",
+      "Tanam pagar tanaman (jagung, kenikir)",
+      "Kontrol kutu kebul secara hayati atau kimiawi"
+    ]
+  },
+  {
+    "label": "menguning_daun_cabai",
+    "tanaman": "Cabai",
+    "penyakit": "Daun Menguning",
+    "status": "Sakit",
+    "deskripsi": "Daun menguning pada cabai dapat disebabkan oleh virus, defisiensi nutrisi, atau jamur akar.",
+    "gejala": [
+      "Daun menguning dari tepi atau tulang daun",
+      "Pertumbuhan terhambat",
+      "Buah kecil dan sedikit"
+    ],
+    "penyebab": [
+      "Kekurangan unsur hara (N, Mg, Fe)",
+      "Serangan virus",
+      "Tanah terlalu asam atau drainase buruk"
+    ],
+    "penanganan": [
+      "Aplikasi pupuk daun yang mengandung unsur mikro",
+      "Perbaiki pH tanah (dolomit)",
+      "Perbaiki drainase"
+    ],
+    "pencegahan": [
+      "Uji tanah sebelum tanam",
+      "Pupuk dasar yang cukup",
+      "Drainase yang baik"
+    ]
+  },
+  {
+    "label": "target_spot_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Target Spot",
+    "status": "Sakit",
+    "deskripsi": "Penyakit target spot pada tomat disebabkan oleh jamur Corynespora cassiicola. Bercak memiliki pola konsentris seperti sasaran panah.",
+    "gejala": [
+      "Bercak coklat dengan pola konsentris seperti target",
+      "Bercak pada daun, batang, dan buah",
+      "Pusat bercak sering rontok"
+    ],
+    "penyebab": [
+      "Jamur Corynespora cassiicola",
+      "Kelembaban tinggi",
+      "Tanaman stres"
+    ],
+    "penanganan": [
+      "Semprot fungisida chlorothalonil atau mancozeb",
+      "Buang daun terinfeksi",
+      "Hindari tanaman terlalu rapat"
+    ],
+    "pencegahan": [
+      "Rotasi tanaman",
+      "Sanitasi lahan dari sisa tanaman",
+      "Pemupukan berimbang"
+    ]
+  },
+  {
+    "label": "tungau_laba-laba_berbintik_tomat",
+    "tanaman": "Tomat",
+    "penyakit": "Serangan Tungau Laba-laba Berbintik",
+    "status": "Sakit",
+    "deskripsi": "Serangan tungau laba-laba berbintik (Tetranychus urticae) pada tomat menyebabkan daun berbintik dan anyaman halus. Bukan penyakit jamur/bakteri, tetapi hama mikroskopis.",
+    "gejala": [
+      "Bintik-bintik kuning kecil pada permukaan daun",
+      "Daun menguning, mengering, dan gugur",
+      "Anyaman halus seperti sarang laba-laba di bawah daun",
+      "Tanaman kerdil dan layu"
+    ],
+    "penyebab": [
+      "Tungau Tetranychus urticae",
+      "Musim kemarau dan kelembaban rendah",
+      "Tanaman stres air"
+    ],
+    "penanganan": [
+      "Semprot akarisida (abamectin, dicofol)",
+      "Pangkas daun terserang berat",
+      "Semprot air kuat untuk menghilangkan tungau"
+    ],
+    "pencegahan": [
+      "Jaga kelembaban dengan pengabutan ringan",
+      "Musuh alami (Phytoseiulus persimilis)",
+      "Cabut gulma inang tungau"
+    ]
+  }
+]
