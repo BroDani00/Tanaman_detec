@@ -1,4 +1,3 @@
-// lib/screens/home/panduan_cerdas.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/app_colors.dart';
@@ -31,7 +30,6 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
   @override
   void initState() {
     super.initState();
-    // Load plant provider data
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final plantProvider = Provider.of<PlantProvider>(context, listen: false);
       plantProvider.init();
@@ -46,7 +44,6 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
 
   void _onNavTap(int index) {
     if (index == _currentNavIndex) {
-      // Jika sudah di halaman yang sama, scroll ke atas
       _scrollToTop();
       return;
     }
@@ -57,11 +54,9 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
 
     switch (index) {
       case 0:
-        // Beranda - scroll ke atas
         _scrollToTop();
         break;
       case 1:
-        // Riwayat Scan
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const RiwayatScanScreen()),
@@ -72,7 +67,6 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
         });
         break;
       case 2:
-        // Profil
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ProfileScreen()),
@@ -119,14 +113,23 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen size untuk responsive
+    final screenSize = MediaQuery.of(context).size;
+    final screenWidth = screenSize.width;
+    final screenHeight = screenSize.height;
+
+    // Tentukan ukuran card berdasarkan lebar layar
+    final cardHeight = screenWidth < 360 ? 110 : 140;
+    final cardAspectRatio = screenWidth < 360 ? 0.85 : 0.9;
+
     return Scaffold(
       key: _scaffoldKey,
       body: SafeArea(
-        top: false,
         child: Column(
           children: [
-            // Header dengan gradient
+            // Header dengan gradient - DIPERBAIKI
             Container(
+              width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -139,90 +142,105 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 40, bottom: 20, left: 20, right: 20),
-                child: Column(
+                padding: EdgeInsets.only(
+                  top: screenHeight * 0.04,
+                  bottom: screenHeight * 0.02,
+                  left: screenWidth * 0.05,
+                  right: screenWidth * 0.05,
+                ),
+                child: Row(
                   children: [
-                    Row(
-                      children: [
-                        // Logo kecil
-                        const CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Icon(Icons.eco, color: AppColors.primary),
-                        ),
-                        const SizedBox(width: 12),
-                        const Text(
-                          'Doctor Plant',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Spacer(),
-                        // Tombol profil
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ProfileScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                    // Logo kecil
+                    const CircleAvatar(
+                      radius: 22,
+                      backgroundColor: Colors.white,
+                      child:
+                          Icon(Icons.eco, color: AppColors.primary, size: 24),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Doctor Plant',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Spacer(),
+                    // Tombol profil
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.person,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ProfileScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
 
-            // Plant Selector
-            Consumer<PlantProvider>(
-              builder: (context, plantProvider, child) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: PlantSelector(
+            // Plant Selector - DIPERBAIKI
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.03,
+                vertical: screenHeight * 0.01,
+              ),
+              child: Consumer<PlantProvider>(
+                builder: (context, plantProvider, child) {
+                  return PlantSelector(
                     selectedPlant: plantProvider.selectedPlant,
                     onPlantSelected: _onPlantSelected,
                     isRequired: false,
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
 
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
 
-            // Menu Grid dengan ScrollView
+            // Expanded untuk sisa ruang
             Expanded(
               child: SingleChildScrollView(
                 controller: _scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.04,
+                ),
                 child: Consumer<PlantProvider>(
                   builder: (context, plantProvider, child) {
                     final isPlantSelected =
                         plantProvider.selectedPlant.isNotEmpty;
+                    final plantName = plantProvider.currentPlantInfo['name'];
+                    final plantIcon = plantProvider.currentPlantInfo['icon'];
+                    final plantColor = plantProvider.currentPlantInfo['color'];
 
                     return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Status tanaman aktif
+                        // Status tanaman aktif - DIPERBAIKI
                         if (isPlantSelected)
                           Container(
+                            width: double.infinity,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            margin: const EdgeInsets.only(bottom: 16),
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            margin: const EdgeInsets.only(bottom: 12),
                             decoration: BoxDecoration(
                               color: AppColors.primary.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(20),
@@ -231,36 +249,37 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
-                                  plantProvider.currentPlantInfo['icon'],
+                                  plantIcon,
                                   size: 18,
-                                  color:
-                                      plantProvider.currentPlantInfo['color'],
+                                  color: plantColor,
                                 ),
                                 const SizedBox(width: 8),
-                                Text(
-                                  'Tanaman Aktif: ${plantProvider.currentPlantInfo['name']}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
+                                Flexible(
+                                  child: Text(
+                                    'Tanaman Aktif: $plantName',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
                             ),
                           ),
 
-                        // Menu grid
+                        // Menu grid - DIPERBAIKI
                         GridView.count(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.9,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
+                          crossAxisCount: screenWidth < 380 ? 2 : 2,
+                          childAspectRatio: cardAspectRatio,
+                          crossAxisSpacing: screenWidth * 0.04,
+                          mainAxisSpacing: screenWidth * 0.04,
                           children: [
                             MenuCard(
                               title: 'Cara Menanam',
-                              subtitle:
-                                  'Panduan menanam ${plantProvider.currentPlantInfo['name']}',
+                              subtitle: 'Panduan menanam $plantName',
                               icon: Icons.grass,
                               color: AppColors.primary,
                               isDisabled: !isPlantSelected,
@@ -281,8 +300,7 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                             ),
                             MenuCard(
                               title: 'Perawatan',
-                              subtitle:
-                                  'Tips merawat ${plantProvider.currentPlantInfo['name']}',
+                              subtitle: 'Tips merawat $plantName',
                               icon: Icons.water_drop,
                               color: Colors.blue,
                               isDisabled: !isPlantSelected,
@@ -346,9 +364,9 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                           ],
                         ),
 
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
 
-                        // Banner Scan Penyakit
+                        // Banner Scan Penyakit - DIPERBAIKI
                         if (isPlantSelected)
                           GestureDetector(
                             onTap: () {
@@ -361,8 +379,11 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                               );
                             },
                             child: Container(
+                              width: double.infinity,
                               margin: const EdgeInsets.only(bottom: 24),
-                              padding: const EdgeInsets.symmetric(vertical: 24),
+                              padding: EdgeInsets.symmetric(
+                                vertical: screenHeight * 0.03,
+                              ),
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   begin: Alignment.topLeft,
@@ -385,32 +406,32 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                               child: Column(
                                 children: [
                                   Container(
-                                    width: 80,
-                                    height: 80,
+                                    width: 70,
+                                    height: 70,
                                     decoration: const BoxDecoration(
                                       color: Colors.white,
                                       shape: BoxShape.circle,
                                     ),
                                     child: const Icon(
                                       Icons.camera_alt,
-                                      size: 40,
+                                      size: 35,
                                       color: AppColors.accent,
                                     ),
                                   ),
-                                  const SizedBox(height: 12),
+                                  const SizedBox(height: 8),
                                   const Text(
                                     'Scan Penyakit Tanaman',
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
+                                  const SizedBox(height: 2),
                                   Text(
-                                    'Deteksi penyakit ${plantProvider.currentPlantInfo['name']}',
+                                    'Deteksi penyakit $plantName',
                                     style: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 13,
                                       color: Colors.white70,
                                     ),
                                   ),
@@ -420,8 +441,11 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                           )
                         else
                           Container(
+                            width: double.infinity,
                             margin: const EdgeInsets.only(bottom: 24),
-                            padding: const EdgeInsets.symmetric(vertical: 24),
+                            padding: EdgeInsets.symmetric(
+                              vertical: screenHeight * 0.03,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.grey[200],
                               borderRadius: BorderRadius.circular(20),
@@ -429,38 +453,41 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                             child: Column(
                               children: [
                                 Container(
-                                  width: 80,
-                                  height: 80,
+                                  width: 70,
+                                  height: 70,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(
                                     Icons.camera_alt,
-                                    size: 40,
+                                    size: 35,
                                     color: Colors.grey,
                                   ),
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: 8),
                                 const Text(
                                   'Scan Penyakit Tanaman',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.grey,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height: 2),
                                 const Text(
                                   'Pilih tanaman terlebih dahulu',
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     color: Colors.grey,
                                   ),
                                 ),
                               ],
                             ),
                           ),
+
+                        // Extra bottom space
+                        SizedBox(height: screenHeight * 0.02),
                       ],
                     );
                   },
