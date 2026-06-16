@@ -29,7 +29,8 @@ class BottomNavBar extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment:
+                MainAxisAlignment.spaceEvenly, // Jarak proporsional
             children: [
               _buildNavItem(
                 icon: Icons.home,
@@ -42,12 +43,6 @@ class BottomNavBar extends StatelessWidget {
                 label: 'Riwayat',
                 index: 1,
                 isActive: currentIndex == 1,
-              ),
-              _buildNavItem(
-                icon: Icons.person,
-                label: 'Profil',
-                index: 2,
-                isActive: currentIndex == 2,
               ),
             ],
           ),

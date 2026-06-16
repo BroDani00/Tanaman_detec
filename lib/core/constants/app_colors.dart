@@ -15,6 +15,7 @@ class AppColors {
   static const Color cabai = Color(0xFFE53935);
   static const Color jagung = Color(0xFFFFA000);
   static const Color padi = Color(0xFF43A047);
+  static const Color tomat = Color(0xFF8E24AA);
 
   // Neutral colors
   static const Color white = Colors.white;

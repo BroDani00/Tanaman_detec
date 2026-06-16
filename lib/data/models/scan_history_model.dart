@@ -2,7 +2,7 @@
 class ScanHistoryModel {
   final int? id;
   final int userId;
-  final String plantType; // cabai, jagung, padi
+  final String plantType; // cabai, jagung, padi, tomat
   final String imagePath;
   final String diagnosisResult;
   final double confidence;

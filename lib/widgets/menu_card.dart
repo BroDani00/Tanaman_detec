@@ -1,4 +1,5 @@
 // lib/widgets/menu_card.dart
+
 import 'package:flutter/material.dart';
 import '../core/constants/app_colors.dart';
 
@@ -22,68 +23,73 @@ class MenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(
-      opacity: isDisabled ? 0.5 : 1.0,
-      child: GestureDetector(
-        onTap: isDisabled ? null : onTap,
-        child: Container(
-          decoration: BoxDecoration(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final cardHeight = constraints.maxHeight;
+
+        final iconSize = cardHeight * 0.18;
+        final circlePadding = cardHeight * 0.08;
+
+        return Opacity(
+          opacity: isDisabled ? 0.5 : 1.0,
+          child: Material(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
+            elevation: 2,
             child: InkWell(
-              onTap: isDisabled ? null : onTap,
               borderRadius: BorderRadius.circular(16),
+              onTap: isDisabled ? null : onTap,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: EdgeInsets.all(circlePadding),
                       decoration: BoxDecoration(
-                        color: color.withValues(alpha: 0.1),
+                        color: color.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(icon, size: 32, color: color),
+                      child: Icon(
+                        icon,
+                        size: iconSize,
+                        color: color,
+                      ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
                     Text(
                       title,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.black,
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: AppColors.grey,
+                    const SizedBox(height: 6),
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          subtitle,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.grey,
+                          ),
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -20,6 +20,8 @@ class _KalkulatorPupukScreenState extends State<KalkulatorPupukScreen> {
     'cabai': {'Urea': 15, 'SP-36': 10, 'KCl': 10},
     'jagung': {'Urea': 20, 'SP-36': 15, 'KCl': 15},
     'padi': {'Urea': 12, 'SP-36': 8, 'KCl': 8},
+    'tomat': {'Urea': 18, 'SP-36': 12, 'KCl': 12},
+     // Default jika tanaman tidak dikenali
   };
 
   void _hitung() {

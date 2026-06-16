@@ -43,6 +43,13 @@ class PlantProvider extends ChangeNotifier {
           'color': Colors.green,
           'imageAsset': 'assets/images/padi.jpg',
         };
+      case 'tomat':
+        return {
+          'name': 'Tomat',
+          'icon': Icons.local_florist,
+          'color': Colors.redAccent,
+          'imageAsset': 'assets/images/tomat.jpg',
+        };
       default:
         return {
           'name': 'Cabai',
@@ -202,6 +209,41 @@ class PlantProvider extends ChangeNotifier {
 • Hasil panen bisa mencapai 6-10 ton per hektar''',
         'kalkulator_dosis':
             'Dosis pupuk padi per m²: Urea 12g, SP-36 8g, KCl 8g',
+      },
+      'tomat': {
+        'cara_menanam': '''
+Cara Menanam Tomat:
+1. Pilih benih tomat unggul dan sehat.
+2. Rendam benih selama 6 jam dalam air hangat.
+3. Semai benih pada media semai selama 2-3 minggu.
+4. Siapkan lahan dengan campuran tanah dan kompos.
+5. Pindahkan bibit saat memiliki 4-5 helai daun.
+6. Gunakan jarak tanam 60 x 50 cm.
+7. Siram pagi dan sore secukupnya.
+8. Pasang ajir untuk menopang batang tomat.
+''',
+        'perawatan': '''
+Perawatan Tanaman Tomat:
+• Siram secara rutin namun jangan berlebihan.
+• Beri pupuk NPK setiap 2 minggu.
+• Pasang ajir untuk menopang tanaman.
+• Pangkas tunas liar di ketiak daun.
+• Bersihkan gulma di sekitar tanaman.
+• Waspadai ulat buah dan kutu daun.
+• Jaga kelembapan tanah tetap stabil.
+''',
+        'cara_panen': '''
+Cara Panen Tomat:
+• Tomat siap panen umur 70-90 hari.
+• Buah berubah warna hijau kekuningan hingga merah.
+• Panen pada pagi hari.
+• Petik buah bersama tangkainya.
+• Hindari memetik saat hujan.
+• Simpan di tempat sejuk dan kering.
+• Produksi rata-rata 2-5 kg per tanaman.
+''',
+        'kalkulator_dosis':
+            'Dosis pupuk tomat per m²: Urea 18g, SP-36 12g, KCl 12g',
       },
     };
 

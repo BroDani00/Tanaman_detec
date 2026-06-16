@@ -41,6 +41,12 @@ class _PlantSelectorState extends State<PlantSelector>
         icon: Icons.eco,
         color: AppColors.padi,
         imageAsset: 'assets/images/padi.jpg'),
+    PlantItem(
+        id: 'tomat',
+        name: 'Tomat',
+        icon: Icons.local_florist,
+        color: AppColors.tomat,
+        imageAsset: 'assets/images/tomat.jpg'),
   ];
 
   @override
@@ -143,17 +149,6 @@ class _PlantSelectorState extends State<PlantSelector>
               decoration: BoxDecoration(
                 color: AppColors.warning.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.warning_amber, size: 16, color: AppColors.warning),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Silakan pilih tanaman terlebih dahulu',
-                    style: TextStyle(fontSize: 12, color: AppColors.warning),
-                  ),
-                ],
               ),
             ),
           ),

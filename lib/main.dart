@@ -9,7 +9,7 @@ import 'services/storage_service.dart';
 import 'splash_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
-import 'screens/home/panduan_cerdas.dart';
+import 'screens/home/home_screen.dart';
 import 'screens/scan/scan_camera_screen.dart';
 import 'screens/scan/scan_result_screen.dart';
 import 'screens/profile/riwayat_scan_screen.dart';

@@ -26,6 +26,7 @@ class PanduanCerdas extends StatefulWidget {
 class _PanduanCerdasState extends State<PanduanCerdas> {
   int _currentNavIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -37,12 +38,28 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
     });
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void _onNavTap(int index) {
+    if (index == _currentNavIndex) {
+      // Jika sudah di halaman yang sama, scroll ke atas
+      _scrollToTop();
+      return;
+    }
+
     setState(() {
       _currentNavIndex = index;
     });
 
     switch (index) {
+      case 0:
+        // Beranda - scroll ke atas
+        _scrollToTop();
+        break;
       case 1:
         // Riwayat Scan
         Navigator.push(
@@ -65,15 +82,17 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
           });
         });
         break;
-      default:
-        // Beranda - scroll to top
-        _scrollToTop();
-        break;
     }
   }
 
   void _scrollToTop() {
-    // Implement scroll to top jika perlu
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   Future<void> _onPlantSelected(String plant) async {
@@ -119,24 +138,20 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                   bottomRight: Radius.circular(30),
                 ),
               ),
-              child: const Padding(
-                padding:
-                    EdgeInsets.only(top: 40, bottom: 20, left: 20, right: 20),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 40, bottom: 20, left: 20, right: 20),
                 child: Column(
                   children: [
                     Row(
                       children: [
                         // Logo kecil
-                        SizedBox(
-                          width: 45,
-                          height: 45,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: Icon(Icons.eco, color: AppColors.primary),
-                          ),
+                        const CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.eco, color: AppColors.primary),
                         ),
-                        SizedBox(width: 12),
-                        Text(
+                        const SizedBox(width: 12),
+                        const Text(
                           'Doctor Plant',
                           style: TextStyle(
                             color: Colors.white,
@@ -144,17 +159,37 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
+                        // Tombol profil
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ProfileScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                    SizedBox(height: 20),
-                    // Plant Selector will be added here with Consumer
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
             ),
 
-            // Plant Selector (dipisah untuk menghindari error)
+            // Plant Selector
             Consumer<PlantProvider>(
               builder: (context, plantProvider, child) {
                 return Padding(
@@ -170,9 +205,10 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
 
             const SizedBox(height: 8),
 
-            // Menu Grid
+            // Menu Grid dengan ScrollView
             Expanded(
               child: SingleChildScrollView(
+                controller: _scrollController,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Consumer<PlantProvider>(
                   builder: (context, plantProvider, child) {
@@ -217,7 +253,7 @@ class _PanduanCerdasState extends State<PanduanCerdas> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           crossAxisCount: 2,
-                          childAspectRatio: 1.1,
+                          childAspectRatio: 0.9,
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 16,
                           children: [

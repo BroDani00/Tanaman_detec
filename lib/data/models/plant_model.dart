@@ -2,7 +2,7 @@
 class PlantModel {
   final int? id;
   final int userId;
-  final String plantType; // cabai, jagung, padi
+  final String plantType; // cabai, jagung, padi, tomat
   final String plantName;
   final DateTime plantingDate;
   final String? notes;

@@ -32,26 +32,21 @@ class DiseaseService {
 
   /// Mencari data penyakit berdasarkan label prediksi
   /// Mengembalikan DiseaseModel jika ditemukan, null jika tidak
-  DiseaseModel? getDiseaseByLabel(String label) {
-    if (!_isLoaded) {
-      print('⚠️ Data penyakit belum dimuat');
-      return null;
-    }
+DiseaseModel? getDiseaseByLabel(String label) {
+    if (!_isLoaded) return null;
+
+    String cleanLabel =
+        label.toLowerCase().trim().replaceAll(RegExp(r'^\d+\s*'), '');
 
     try {
-      // Mencari data dengan label yang cocok
-      final disease = _diseases?.firstWhere(
-        (disease) => disease.label.toLowerCase() == label.toLowerCase(),
+      return _diseases?.firstWhere(
+        (disease) => disease.label.toLowerCase().trim() == cleanLabel,
         orElse: () => _getDefaultDisease(),
       );
-
-      return disease;
     } catch (e) {
-      print('❌ Error mencari data penyakit: $e');
       return _getDefaultDisease();
     }
   }
-
   /// Mendapatkan data default jika label tidak ditemukan
   DiseaseModel _getDefaultDisease() {
     return DiseaseModel(

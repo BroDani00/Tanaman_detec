@@ -42,4 +42,8 @@ flutter:
     - assets/models/plant_model.tflite
     - assets/models/plant_label.txt
     - assets/data/disease_data.json
-    - assets/images/images.png
+    - assets/images/logo.png
+    - assets/images/padi.jpg
+    - assets/images/cabai.jpg
+    - assets/images/jagung.jpg
+    - assets/images/tomat.jpg
