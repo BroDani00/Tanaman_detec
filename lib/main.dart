@@ -1,4 +1,3 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/themes/app_theme.dart';
@@ -6,10 +5,12 @@ import 'core/routes/app_routes.dart';
 import 'providers/auth_provider.dart';
 import 'providers/plant_provider.dart';
 import 'services/storage_service.dart';
+import 'services/tflite_service.dart';
+import 'services/disease_service.dart';
 import 'splash_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
-import 'screens/home/home_screen.dart';
+import 'screens/home/panduan_cerdas.dart';
 import 'screens/scan/scan_camera_screen.dart';
 import 'screens/scan/scan_result_screen.dart';
 import 'screens/profile/riwayat_scan_screen.dart';
@@ -19,12 +20,25 @@ import 'screens/menu/perawatan_screen.dart';
 import 'screens/menu/cara_panen_screen.dart';
 import 'screens/menu/kalkulator_pupuk_screen.dart';
 
+// Global instances untuk diakses dari mana saja
+final tfliteService = TfliteService();
+final diseaseService = DiseaseService();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize storage service
   final storage = StorageService();
   await storage.init();
+
+  // Initialize AI services
+  try {
+    await tfliteService.loadModel();
+    await diseaseService.loadDiseaseData();
+    print('✅ AI Services initialized successfully');
+  } catch (e) {
+    print('❌ Failed to initialize AI services: $e');
+  }
 
   runApp(const MyApp());
 }

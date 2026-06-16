@@ -1,4 +1,3 @@
-// lib/screens/scan/scan_camera_screen.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,8 +6,11 @@ import '../../core/constants/app_colors.dart';
 import '../../core/routes/app_routes.dart';
 import '../../providers/plant_provider.dart';
 import '../../data/repositories/scan_repository.dart';
+import '../../services/tflite_service.dart';
+import '../../services/disease_service.dart';
 import '../../widgets/loading_dialog.dart';
 import 'scan_result_screen.dart';
+import '../../../main.dart'; // Import global services
 
 class ScanCameraScreen extends StatefulWidget {
   const ScanCameraScreen({super.key});
@@ -58,29 +60,7 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
     if (mounted) LoadingDialog.hide(context);
 
     if (image != null && mounted) {
-      // Show loading while diagnosing
-      LoadingDialog.show(context, message: 'Menganalisis tanaman...');
-
-      // Perform diagnosis (dummy for now, will be replaced with TFLite)
-      final result =
-          await _scanRepository.diagnoseDisease(image, selectedPlant);
-
-      if (mounted) LoadingDialog.hide(context);
-
-      if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ScanResultScreen(
-              imagePath: image.path,
-              diagnosisResult: result['diagnosis'],
-              confidence: result['confidence'],
-              recommendation: result['recommendation'],
-              plantType: selectedPlant,
-            ),
-          ),
-        );
-      }
+      await _diagnoseAndNavigate(image, selectedPlant);
     } else if (mounted) {
       _showSnackbar('Gagal mengambil foto', Colors.red);
     }
@@ -98,29 +78,83 @@ class _ScanCameraScreenState extends State<ScanCameraScreen>
     final image = await _scanRepository.pickImageFromGallery();
 
     if (image != null && mounted) {
-      LoadingDialog.show(context, message: 'Menganalisis tanaman...');
+      await _diagnoseAndNavigate(image, selectedPlant);
+    } else if (mounted) {
+      _showSnackbar('Gagal memuat gambar', Colors.red);
+    }
+  }
 
-      final result =
-          await _scanRepository.diagnoseDisease(image, selectedPlant);
+  Future<void> _diagnoseAndNavigate(File image, String plantType) async {
+    // Show loading
+    LoadingDialog.show(context, message: 'Menganalisis tanaman dengan AI...');
 
-      if (mounted) LoadingDialog.hide(context);
+    try {
+      // Check if AI services are loaded
+      if (!tfliteService.isLoaded) {
+        throw Exception('Model AI belum siap. Silakan restart aplikasi.');
+      }
+
+      if (!diseaseService.isLoaded) {
+        throw Exception(
+            'Database penyakit belum siap. Silakan restart aplikasi.');
+      }
+
+      // Perform AI prediction
+      final prediction = await tfliteService.predict(image);
+
+      print(
+          'AI Prediction - Label: ${prediction.label}, Confidence: ${prediction.confidence}');
+
+      // Get disease details from JSON
+      final diseaseData = diseaseService.getDiseaseByLabel(prediction.label);
+
+      String diagnosisResult;
+      String recommendation;
+
+      if (diseaseData != null) {
+        diagnosisResult = diseaseData.penyakit;
+
+        // Build recommendation from disease data
+        List<String> recommendations = [];
+        if (diseaseData.penanganan.isNotEmpty) {
+          recommendations.addAll(diseaseData.penanganan);
+        }
+        if (diseaseData.pencegahan.isNotEmpty) {
+          recommendations.addAll(diseaseData.pencegahan);
+        }
+        recommendation = recommendations.isNotEmpty
+            ? recommendations.join('\n\n')
+            : 'Konsultasikan dengan penyuluh pertanian setempat untuk penanganan lebih lanjut.';
+      } else {
+        diagnosisResult = prediction.label;
+        recommendation =
+            'Hasil deteksi: ${prediction.label} dengan tingkat keyakinan ${(prediction.confidence * 100).toStringAsFixed(1)}%. Silakan konsultasikan dengan penyuluh pertanian.';
+      }
 
       if (mounted) {
+        LoadingDialog.hide(context);
+
+        // Save to repository (will be saved when user clicks save in result screen)
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ScanResultScreen(
               imagePath: image.path,
-              diagnosisResult: result['diagnosis'],
-              confidence: result['confidence'],
-              recommendation: result['recommendation'],
-              plantType: selectedPlant,
+              diagnosisResult: diagnosisResult,
+              confidence: prediction.confidence,
+              recommendation: recommendation,
+              plantType: plantType,
+              predictedLabel: prediction.label, // Pass raw label for saving
             ),
           ),
         );
       }
-    } else if (mounted) {
-      _showSnackbar('Gagal memuat gambar', Colors.red);
+    } catch (e) {
+      if (mounted) {
+        LoadingDialog.hide(context);
+        _showSnackbar('Error: $e', Colors.red);
+        print('Diagnosis error: $e');
+      }
     }
   }
 

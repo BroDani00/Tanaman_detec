@@ -1,25 +1,31 @@
-// lib/data/repositories/scan_repository.dart
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image/image.dart' as img;
 import '../database/database_helper.dart';
 import '../models/scan_history_model.dart';
 import '../../services/storage_service.dart';
-import '../../providers/plant_provider.dart';
+import '../../services/tflite_service.dart';
+import '../../services/disease_service.dart';
+import '../../data/models/disease_model.dart';
 
 class ScanRepository {
   final ImagePicker _picker = ImagePicker();
   final DatabaseHelper _dbHelper = DatabaseHelper();
   final StorageService _storage = StorageService();
 
-  // Pick image from camera
+  // Pick image from camera dengan kualitas lebih baik
   Future<File?> pickImageFromCamera() async {
     try {
       final XFile? image = await _picker.pickImage(
         source: ImageSource.camera,
-        imageQuality: 80,
+        imageQuality: 85, // Turunkan sedikit untuk stabilitas
+        preferredCameraDevice: CameraDevice.rear,
       );
+
       if (image != null) {
-        return File(image.path);
+        // Validasi dan konversi gambar jika perlu
+        return await _validateAndConvertImage(File(image.path));
       }
     } catch (e) {
       print('Error picking image from camera: $e');
@@ -27,15 +33,16 @@ class ScanRepository {
     return null;
   }
 
-  // Pick image from gallery
+  // Pick image from gallery dengan kualitas lebih baik
   Future<File?> pickImageFromGallery() async {
     try {
       final XFile? image = await _picker.pickImage(
         source: ImageSource.gallery,
-        imageQuality: 80,
+        imageQuality: 85,
       );
+
       if (image != null) {
-        return File(image.path);
+        return await _validateAndConvertImage(File(image.path));
       }
     } catch (e) {
       print('Error picking image from gallery: $e');
@@ -43,44 +50,92 @@ class ScanRepository {
     return null;
   }
 
-  // Dummy diagnosis (will be replaced with TFLite later)
-  Future<Map<String, dynamic>> diagnoseDisease(
-      File image, String plantType) async {
-    await Future.delayed(const Duration(seconds: 2)); // Simulate processing
+  // Validasi dan konversi gambar ke format yang kompatibel
+  Future<File> _validateAndConvertImage(File imageFile) async {
+    try {
+      // Baca bytes gambar
+      final bytes = await imageFile.readAsBytes();
 
-    // Dummy result - random between healthy and some diseases
-    final List<String> possibleResults = [
-      'Tanaman Sehat',
-      'Penyakit Bercak Daun',
-      'Penyakit Layu Bakteri',
-      'Penyakit Virus Keriting',
-    ];
+      // Coba decode dengan library image
+      img.Image? decoded = img.decodeImage(bytes);
 
-    final random = DateTime.now().millisecondsSinceEpoch % 4;
-    final diagnosis = possibleResults[random.toInt()];
-    final confidence =
-        diagnosis == 'Tanaman Sehat' ? 0.95 : 0.75 + (random * 0.05);
+      if (decoded == null) {
+        // Jika gagal decode, coba simpan ulang sebagai PNG
+        print('Gambar corrupt, mencoba konversi...');
+        final tempDir = await getTemporaryDirectory();
+        final newPath =
+            '${tempDir.path}/converted_${DateTime.now().millisecondsSinceEpoch}.png';
 
-    return {
-      'diagnosis': diagnosis,
-      'confidence': confidence.clamp(0.0, 1.0),
-      'recommendation': _getRecommendation(diagnosis, plantType),
-    };
-  }
+        // Buat file PNG baru
+        final newFile = File(newPath);
+        await newFile.writeAsBytes(bytes);
 
-  String _getRecommendation(String diagnosis, String plantType) {
-    if (diagnosis == 'Tanaman Sehat') {
-      return 'Tanaman Anda dalam kondisi baik. Lanjutkan perawatan seperti biasa.';
-    } else if (diagnosis == 'Penyakit Bercak Daun') {
-      return 'Segera buang daun yang terserang. Semprot dengan fungisida berbahan aktif tembaga. Jaga sirkulasi udara.';
-    } else if (diagnosis == 'Penyakit Layu Bakteri') {
-      return 'Cabut dan bakar tanaman terserang. Gunakan varietas tahan penyakit. Rotasi tanaman.';
-    } else {
-      return 'Segera konsultasikan ke penyuluh pertanian terdekat. Hindari penggunaan pestisida berlebihan.';
+        // Coba decode ulang
+        final newBytes = await newFile.readAsBytes();
+        decoded = img.decodeImage(newBytes);
+
+        if (decoded == null) {
+          throw Exception('Gambar tidak valid setelah konversi');
+        }
+
+        // Simpan sebagai PNG (lebih stabil)
+        final pngBytes = img.encodePng(decoded);
+        await newFile.writeAsBytes(pngBytes);
+        return newFile;
+      }
+
+      return imageFile;
+    } catch (e) {
+      print('Error validating image: $e');
+      rethrow;
     }
   }
 
-  // Save scan result to database
+  // Diagnosis dengan AI (sama seperti sebelumnya)
+  Future<Map<String, dynamic>> diagnoseWithAI(
+    File image,
+    String plantType,
+    TfliteService tflite,
+    DiseaseService diseaseService,
+  ) async {
+    final PredictionResult prediction = await tflite.predict(image);
+    final DiseaseModel? disease =
+        diseaseService.getDiseaseByLabel(prediction.label);
+
+    if (disease != null) {
+      final recommendation = '''
+Penyakit: ${disease.penyakit}
+Deskripsi: ${disease.deskripsi}
+
+Gejala:
+${disease.gejala.map((g) => '- $g').join('\n')}
+
+Penyebab:
+${disease.penyebab.map((p) => '- $p').join('\n')}
+
+Penanganan:
+${disease.penanganan.map((pn) => '- $pn').join('\n')}
+
+Pencegahan:
+${disease.pencegahan.map((pc) => '- $pc').join('\n')}
+''';
+      return {
+        'diagnosis': disease.penyakit,
+        'confidence': prediction.confidence,
+        'recommendation': recommendation,
+        'diseaseData': disease,
+      };
+    } else {
+      return {
+        'diagnosis': prediction.label,
+        'confidence': prediction.confidence,
+        'recommendation':
+            'Tidak ditemukan informasi detail untuk penyakit ini. Konsultasikan dengan ahli pertanian.',
+      };
+    }
+  }
+
+  // Save scan result
   Future<void> saveScanResult({
     required String imagePath,
     required String plantType,

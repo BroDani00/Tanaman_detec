@@ -23,6 +23,9 @@ class DiseaseService {
 
       print(
           '✅ Data penyakit berhasil dimuat. ${_diseases?.length} penyakit tersedia');
+      for (var d in _diseases!) {
+        print('  - ${d.label}');
+      }
     } catch (e) {
       print('❌ Gagal memuat data penyakit: $e');
       _isLoaded = false;
@@ -32,30 +35,39 @@ class DiseaseService {
 
   /// Mencari data penyakit berdasarkan label prediksi
   /// Mengembalikan DiseaseModel jika ditemukan, null jika tidak
-DiseaseModel? getDiseaseByLabel(String label) {
+  DiseaseModel? getDiseaseByLabel(String label) {
     if (!_isLoaded) return null;
 
-    String cleanLabel =
-        label.toLowerCase().trim().replaceAll(RegExp(r'^\d+\s*'), '');
+    String cleanLabel = label.toLowerCase().trim();
 
+    // Try exact match first
     try {
       return _diseases?.firstWhere(
         (disease) => disease.label.toLowerCase().trim() == cleanLabel,
-        orElse: () => _getDefaultDisease(),
       );
-    } catch (e) {
-      return _getDefaultDisease();
+    } catch (_) {
+      // Try partial match
+      try {
+        return _diseases?.firstWhere(
+          (disease) =>
+              cleanLabel.contains(disease.label.toLowerCase().trim()) ||
+              disease.label.toLowerCase().trim().contains(cleanLabel),
+        );
+      } catch (_) {
+        return _getDefaultDisease(label);
+      }
     }
   }
+
   /// Mendapatkan data default jika label tidak ditemukan
-  DiseaseModel _getDefaultDisease() {
+  DiseaseModel _getDefaultDisease(String label) {
     return DiseaseModel(
-      label: 'unknown',
+      label: label,
       tanaman: 'Tidak diketahui',
-      penyakit: 'Tidak teridentifikasi',
+      penyakit: label,
       status: 'Unknown',
       deskripsi:
-          'Maaf, informasi untuk penyakit ini belum tersedia dalam database.',
+          'Maaf, informasi untuk penyakit "$label" belum tersedia dalam database.',
       gejala: ['Informasi tidak tersedia'],
       penyebab: ['Informasi tidak tersedia'],
       penanganan: ['Konsultasikan dengan penyuluh pertanian setempat'],

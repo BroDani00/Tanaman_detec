@@ -5,6 +5,7 @@ import 'core/constants/app_colors.dart';
 import 'core/routes/app_routes.dart';
 import 'providers/auth_provider.dart';
 import 'providers/plant_provider.dart';
+import 'providers/model_provider.dart'; 
 import 'services/storage_service.dart';
 
 class SplashScreen extends StatefulWidget {

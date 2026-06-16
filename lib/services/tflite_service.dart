@@ -18,10 +18,14 @@ class TfliteService {
     try {
       // Memuat model dari asset
       _interpreter = await Interpreter.fromAsset(AppConstants.modelPath);
+      
+      // Debug: print input output details
+      print('✅ Model loaded successfully');
+      print('Input tensor shape: ${_interpreter?.getInputTensor(0).shape}');
+      print('Output tensor shape: ${_interpreter?.getOutputTensor(0).shape}');
 
       // Memuat file labels
-      final labelsContent =
-          await rootBundle.loadString(AppConstants.labelsPath);
+      final labelsContent = await rootBundle.loadString(AppConstants.labelsPath);
       _labels = labelsContent
           .split('\n')
           .where((label) => label.trim().isNotEmpty)
@@ -29,6 +33,7 @@ class TfliteService {
 
       _isLoaded = true;
       print('✅ Model berhasil dimuat. ${_labels?.length} kelas tersedia');
+      print('Labels: $_labels');
     } catch (e) {
       print('❌ Gagal memuat model: $e');
       _isLoaded = false;
@@ -50,6 +55,9 @@ class TfliteService {
       // 2. Konversi ke tensor
       final inputTensor = _imageToTensor(inputImage);
 
+      // Debug input shape
+      print('Input tensor shape: ${inputTensor.length} x ${inputTensor[0].length} x ${inputTensor[0][0].length} x ${inputTensor[0][0][0].length}');
+
       // 3. Siapkan output tensor
       final output = List.filled(1 * (_labels?.length ?? 0), 0.0)
           .reshape([1, _labels?.length ?? 0]);
@@ -59,6 +67,10 @@ class TfliteService {
 
       // 5. Ambil hasil dengan probabilitas tertinggi
       final probabilities = output[0] as List<double>;
+      
+      // Debug: print semua probabilitas
+      print('Probabilities: $probabilities');
+      
       int maxIndex = 0;
       double maxProb = probabilities[0];
 
@@ -69,7 +81,12 @@ class TfliteService {
         }
       }
 
-      final predictedLabel = _labels?[maxIndex] ?? 'unknown';
+      String predictedLabel = _labels?[maxIndex] ?? 'unknown';
+      
+      // Clean label (remove index number if exists)
+      predictedLabel = predictedLabel.replaceAll(RegExp(r'^\d+\s+'), '');
+      
+      print('Predicted: $predictedLabel with confidence ${(maxProb * 100).toStringAsFixed(2)}%');
 
       return PredictionResult(
         label: predictedLabel,
@@ -101,6 +118,7 @@ class TfliteService {
   }
 
   /// Konversi gambar ke format tensor yang dapat diproses model
+  /// Format: [1, height, width, 3] dengan nilai float 0.0 - 1.0
   List<List<List<List<double>>>> _imageToTensor(img.Image image) {
     final inputSize = AppConstants.modelInputSize;
 
@@ -120,9 +138,16 @@ class TfliteService {
     for (int y = 0; y < inputSize; y++) {
       for (int x = 0; x < inputSize; x++) {
         final pixel = image.getPixel(x, y);
-        input[0][y][x][0] = pixel / 255.0; // Red
-        input[0][y][x][1] = pixel / 255.0; // Green
-        input[0][y][x][2] = pixel / 255.0; // Blue
+        
+        // Extract RGB values correctly
+        int r = img.getRed(pixel);
+        int g = img.getGreen(pixel);
+        int b = img.getBlue(pixel);
+        
+        // Normalize to [0,1]
+        input[0][y][x][0] = r / 255.0;
+        input[0][y][x][1] = g / 255.0;
+        input[0][y][x][2] = b / 255.0;
       }
     }
 
